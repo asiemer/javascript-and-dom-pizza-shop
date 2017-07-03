@@ -3,6 +3,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="static/styles/pace.css"></link>
+	<script type="text/javascript" src="static/scripts/pace.min.js"></script>
 	<link type="text/css" rel="stylesheet" href="static/styles/animate.css"></link>
 	<link rel="stylesheet" type="text/css" href="static/styles/styles.css"></link>
 	<link rel="stylesheet" type="text/css" href="static/styles/order-board.css"></link>
@@ -19,7 +21,7 @@
 	  <source src="static/sounds/sound-dinner-music.mp3" type="audio/mpeg">
 	  Your browser does not support the audio element.
 	</audio>
-	<div id="fade-out" class="animated fadeOut"></div>
+	<div id="fade-out" class=""><h1>Loading...</h1></div>
 	<div id='kitchen'>
 		<div class="hud left-wall">
 			<div class="col tv tv1"></div>
@@ -144,6 +146,8 @@ window.onload = function() {
 
 	document.getElementById("cook2").addEventListener("next-customer", nextCustomer);
 	nextCustomer();
+
+	document.getElementById("fade-out").classList.add("animated facdeOut");
 }
 
 function getRandom(min, max) {
