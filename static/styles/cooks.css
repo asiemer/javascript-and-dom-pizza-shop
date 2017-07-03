@@ -1,0 +1,68 @@
+.paused{
+    -webkit-animation-play-state:paused;
+    -moz-animation-play-state:paused;
+    -o-animation-play-state:paused; 
+    animation-play-state:paused;
+}
+
+@keyframes cook1-walk {
+	from {
+		top: 90px;
+		left: 590px;
+	}
+	to {
+		top: 90px;
+		left: 1200px;
+	}
+}
+
+#cook1 {
+	top: 90;
+	left: 590px;
+	animation-name: cook1-walk;
+	animation-duration:2s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+	animation-direction: alternate;
+}
+
+@keyframes cook2-walk {
+	from {
+		top: 650px;
+		left: 590px;
+	}
+	to {
+		top: 650px;
+		left: 1530px;
+	}
+}
+
+#cook2 {
+	top: 650px;
+	left: 590px;
+	animation-name: cook2-walk;
+	animation-duration:2s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+	animation-direction: alternate;
+}
+
+@keyframes cook3-walk {
+	from {
+		top: 100px;
+		left: 1250px;
+	}
+	to {
+		top: 400px;
+		left: 1600px;
+	}
+}
+#cook3 {
+	top: 400px;
+	left: 1600px;
+	animation-name: cook3-walk;
+	animation-duration:2s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+	animation-direction: alternate;
+}

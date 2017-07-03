@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link type="text/css" rel="stylesheet" href="static/styles/animate.css"></link>
+	<link rel="stylesheet" type="text/css" href="static/styles/styles.css"></link>
+	<link rel="stylesheet" type="text/css" href="static/styles/order-board.css"></link>
+	<link rel="stylesheet" type="text/css" href="static/styles/cooks.css"></link>
+
+	<script type="text/javascript" src="static/scripts/cook.js"></script>
+	<script type="text/javascript" src="static/scripts/oven.js"></script> 
+	<script type="text/javascript" src="static/scripts/freezer.js"></script> 
+	<script type="text/javascript" src="static/scripts/pizzas.js"></script> 
+	<script type="text/javascript" src="static/scripts/hud.js"></script>
+</head>
+<body id='restaurant'>
+	<audio id="music" class="actor" controls>
+	  <source src="static/sounds/sound-dinner-music.mp3" type="audio/mpeg">
+	  Your browser does not support the audio element.
+	</audio>
+	<div id="fade-out" class="animated fadeOut"></div>
+	<div id='kitchen'>
+		<div class="hud left-wall">
+			<div class="col tv tv1"></div>
+			<div id="delivered" class="col tv tv2">
+				Delivered
+			</div>
+			<div class="col tv tv3"></div>
+		</div>
+		<div class="hud back-wall">
+			<div class="col tv tv4"></div>
+			<div id="cooking" class="col tv tv5">
+				Cooking
+			</div>
+			<div class="col tv tv6"></div>
+			<div class="col tv tv7"></div>
+		</div>
+		<div class="hud right-wall">
+			<div id="orders" class="col tv tv8">
+				Order Up
+			</div>
+			<div class="col tv tv9"></div>
+			<div class="col tv tv10"></div>
+		</div>
+	</div>
+
+	<img class="actor table table1" src="static/images/table.png" id="table1" />
+	<img class="actor table table2" src="static/images/table.png" id="table2" />
+	<img class="actor table table3" src="static/images/table.png" id="table3" />
+	<img class="actor table table4" src="static/images/table.png" id="table4" />
+
+	<img class="actor freezer" src="static/images/freezer-closed.png" id="freezer" />
+	<audio src="static/sounds/sound-fridge-2-close.wav" id="freezerclose"></audio>
+	<audio src="static/sounds/sound-fridge-2-open.wav" id="freezeropen"></audio>
+
+	<img class="actor oven" src="static/images/oven-open.png" id="oven" />
+	<audio src="static/sounds/sound-oven-1-close.wav" id="ovenclose"></audio>
+	<audio src="static/sounds/sound-oven-1-open.wav" id="ovenopen"></audio>
+	<audio src="static/sounds/sound-fire.wav" id="fire"></audio>
+	<audio src="static/sounds/sound-kitchen-bell.wav" id="bell"></audio>
+
+	<img class="actor computer computer1" id="computer1" src="static/images/computer-left.png" />
+
+	<img class="actor computer computer2" id="computer2" src="static/images/computer-right.png" />
+
+	<img class="actor cook cook1" id="cook1" src="static/images/pizza-man-left.gif" />
+	<audio src="static/sounds/sound-footsteps-1.wav" id="footsteps1"></audio>
+	<audio id="type1" src="static/sounds/sound-computer-keyboard.wav"></audio>
+
+	<img class="actor cook cook2" id="cook2" src="static/images/pizza-man-left.gif" />
+	<audio src="static/sounds/sound-footsteps-2.wav" id="footsteps2"></audio>
+	<audio id="type2" src="static/sounds/sound-computer-keyboard.wav"></audio>
+
+	<img class="actor cook cook3" id="cook3" src="static/images/pizza-man-left.gif" />
+	<audio src="static/sounds/sound-footsteps-3.wav" id="footsteps3"></audio>
+	<audio id="type3" src="static/sounds/sound-computer-keyboard.wav"></audio>
+
+	<audio id="pizza-pizza" src="static/sounds/sound-pizza-pizza.mp3"></audio>
+	<audio id="orderUp" src="static/sounds/sound-order-up.wav"></audio>
+	<audio id="customersTalking" src="static/sounds/sound-customers-talking.wav"></audio>
+	<div id="dancer"><img src="static/images/dancers/dancers-18.gif" /></div>
+<script>
+"use strict";
+
+/* global customers, orders, cooking, delivered, music, Cook:true, HUD:true, Oven:true, PizzaTable:true */
+/* exported music, customers, orders, cooking, delivered */
+let music;
+let customersTalking;
+let cook1;
+let cook2;
+let cook3;
+let pizzaTable;
+let hud;
+let oven;
+
+const customers = [];
+const orders = [];
+const cooking = [];
+const delivered = [];
+
+function createCustomers() {
+	for (let i = 0; i < 10; i++) {
+		customers.push(i);
+	}
+}
+
+function nextCustomer() {
+	cook2.placeOrder();
+}
+
+window.onload = function() {
+	music = document.getElementById("music");
+	music.volume=.25;
+	music.play();
+
+	customersTalking = document.getElementById("customersTalking");
+	customersTalking.onended = () => {
+		customersTalking.currentTime = 0;
+		customersTalking.play();
+	};
+
+	createCustomers();
+
+	pizzaTable = new PizzaTable();
+	pizzaTable.init();
+
+	customersTalking.play();
+
+	cook1 = new Cook(1);
+	cook1.init();
+
+	cook2 = new Cook(2);
+	cook2.init();
+
+	cook3 = new Cook(3);
+	cook3.init();
+
+	hud = new HUD();
+	hud.init();
+
+	oven = new Oven();
+	oven.init();
+
+	document.getElementById("cook2").addEventListener("next-customer", nextCustomer);
+	nextCustomer();
+}
+
+function getRandom(min, max) {
+    var result = Math.random() * (max - min) + min;
+    return Math.round(result);
+}
+
+let sPressed = false;
+let currentDancer = 1;
+let dancer = document.querySelector("#dancer img");
+dancer.style.display = "none";
+// s = 83
+// d = 68
+window.addEventListener('keydown', function(e) {
+	if(sPressed && (e.keyCode == 68 || e.keyCode == 70)) {
+		if(e.keyCode == 68) {
+			currentDancer++;
+			if(currentDancer == 22) currentDancer = 1;
+		}
+		if(e.keyCode == 70) {
+			currentDancer--;
+			if(currentDancer == 0) currentDancer = 21;
+		}
+
+		console.log('next dancer to the stage...');
+		dancer.style.display = "inline";
+		dancer.attributes.src.nodeValue = `static/images/dancers/dancers-${currentDancer}.gif`;
+	}
+	else if (!sPressed && e.keyCode == 83) {
+		sPressed = true; // about to show dancers!
+		console.log('about to show dancers!');
+	}
+	else if (sPressed && e.keyCode == 83) {
+		sPressed = false;
+		dancer.style.display = "none";
+		console.log('time to put the dancers away!')
+	}
+});
+</script>
+</body>
+</html>

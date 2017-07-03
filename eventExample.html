@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script>
+	'use strict';
+	window.onload = function() {
+		let eventProxy = document.getElementById('eventProxy');
+		eventProxy.addEventListener('activity-in-my-code-completed', ProcessEvent);
+	}
+
+	function ProcessEvent(e) {
+		console.dir(e);
+		console.log(e.type);
+		console.log(e.CustomData);
+		console.log(e.MoreCustomData);
+	}
+	</script>
+</head>
+<body>
+
+
+	<!-- events are passed through an html element - any element -->
+	<br id="eventProxy">
+
+
+	<script>
+	'use strict';
+
+	function SendEvent() {
+		let eventProxy = document.getElementById('eventProxy');
+
+		//generally events are past tense
+		//The activity happened, it's done, can't be undone
+		let event = new Event('activity-in-my-code-completed'); 
+		event.CustomData = 'some custom data';
+		event.MoreCustomData = 'more custom data';
+		eventProxy.dispatchEvent(event);
+	}
+	</script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+.hud {
+	position:relative;
+	border:solid 2px black;
+	font-family: "courier new";
+	padding:10px;
+	display:flex;
+	align-items: flex-end;
+	background-repeat: repeat;
+	background-size: cover;
+	align-content: bottom;
+}
+
+.left-wall {
+	top: -280px;
+	left: -40px;
+	width: 500px;
+	height: 600px;
+	transform: skewY(144deg);
+	background-image: url('../images/chalkboard.jpg');
+}
+.back-wall {
+	top:-636px;
+	left:420px;
+	width: 1140px;
+	height: 200px;
+	background-image: url('../images/chalkboard-black.jpg');
+}
+
+.right-wall {
+	transform: skewY(215deg);
+	top: -1080px;
+	left:1580px;
+	width: 500px;
+	height:600px;
+	background-image: url('../images/chalkboard-black.jpg');
+}
+
+.col p:first-child {
+	font-weight:bold;
+	color: #fad48b;
+}
+.col {
+	margin:10px;
+	flex:1;
+	height: 180px;
+	overflow-y:scroll;
+	text-align:left;
+	color: #f5f9ad;
+}
+
+.tv {
+	border: black solid 5px;
+	width: 200px;
+	background-color:#333333;
+	background-size: cover;
+}
+
+.tv1 {
+	background-image: url('../images/tv/pizza-3.gif');
+}
+.tv2 {
+	background-image: url('../images/tv/make-pizza.gif');
+}
+.tv3 {
+	background-image: url(../images/tv/make-pizza-3.gif);
+}
+.tv4 {
+	background-image: url('../images/tv/make-pizza-2.gif');
+}
+.tv5 {
+	background-image: url('../images/tv/pizza-runner.gif');
+}
+.tv6 {
+	background-image: url('../images/tv/pizza-2.gif');
+}
+.tv7 {
+	background-image: url('../images/tv/pizza-4.gif');
+}
+.tv8 {
+	background-image: url('../images/tv/pizza.gif');
+}
+.tv9 {
+	background-image: url('../images/tv/making-pizza.gif');
+}
+.tv10 {
+	background-image: url();
+}
